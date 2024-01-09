@@ -13,10 +13,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Image } from 'components';
 import { FormValidationSchema, FormValues, Props } from './AuthModal.types';
+import { useAuthStore } from 'stores/auth/AuthStore';
 
 const AuthModal = ({ open, handleClose }: Props) => {
   const theme = useTheme();
   const [isRegister, setIsRegister] = useState(true);
+  const { login, register: registerUser } = useAuthStore((state) => ({
+    login: state.login,
+    register: state.register,
+  }));
   const {
     register,
     handleSubmit,
@@ -59,7 +64,11 @@ const AuthModal = ({ open, handleClose }: Props) => {
         return;
       }
     }
-    console.log(formData);
+    if (isRegister) {
+      registerUser(formData);
+    } else {
+      login(formData);
+    }
   };
 
   return (

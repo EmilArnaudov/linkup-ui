@@ -40,7 +40,7 @@ const LandingPage = () => {
 
   const MemoizedCarousel = useMemo(
     () => <ImageCarousel mt={10} images={images()} />,
-    [],
+    [images()],
   );
 
   const handleAuthModal = () => {

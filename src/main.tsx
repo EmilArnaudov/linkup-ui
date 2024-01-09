@@ -7,24 +7,27 @@ import theme from './theme/theme';
 
 import './reset.css';
 import './main.css';
-import { Login, MainTemplate, Register } from 'pages';
+import { GuestView, UserView } from 'pages';
+import AppMainPage from 'pages/app-main-page/AppMainPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainTemplate />,
+    element: <GuestView />,
     children: [
       {
         path: '',
         element: <LandingPage />,
       },
+    ],
+  },
+  {
+    path: '/app',
+    element: <UserView />,
+    children: [
       {
-        path: 'login',
-        element: <Login />,
-      },
-      {
-        path: 'register',
-        element: <Register />,
+        path: '',
+        element: <AppMainPage />,
       },
     ],
   },

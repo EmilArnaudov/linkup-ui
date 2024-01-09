@@ -1,6 +1,7 @@
 import { LandingPage } from './landing';
 import { Login } from './login';
 import { Register } from './register';
-import MainTemplate from './MainTemplate';
+import GuestView from './GuestView';
+import UserView from './UserView';
 
-export { LandingPage, Login, Register, MainTemplate };
+export { LandingPage, Login, Register, GuestView, UserView };

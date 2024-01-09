@@ -2,12 +2,17 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 // import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 // import { Link } from 'react-router-dom';
 // import styled from '@emotion/styled';
 import { Image } from 'components';
+import { useAuthStore } from 'stores/auth/AuthStore';
 
 export default function Navbar() {
+  const { logout, currentUser } = useAuthStore((state) => ({
+    logout: state.logout,
+    currentUser: state.currentUser,
+  }));
   // const theme = useTheme();
 
   // const StyledLink = styled(Link)`
@@ -39,11 +44,11 @@ export default function Navbar() {
           >
             <Image src="/logo.png" alt="linkup logo" height={54} width={88} />
           </IconButton>
-          {/* <Stack direction="row" gap={1}>
-            <StyledLink to="/register">Register</StyledLink>
-
-            <StyledLink to="/login">Login</StyledLink>
-          </Stack> */}
+          {currentUser && (
+            <Box onClick={logout}>
+              <Typography>Logout</Typography>
+            </Box>
+          )}
         </Stack>
       </AppBar>
     </Box>
