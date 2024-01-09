@@ -3,7 +3,7 @@ import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
 import { Image, ImageCarousel } from 'components';
 import InformationSection from './InformationSection';
 import { useEffect, useMemo, useState } from 'react';
-import { useGamesStore } from 'stores/games-store/GamesStore';
+import { useGamesStore } from 'stores/games/GamesStore';
 import AuthModal from 'components/auth-modal/AuthModal';
 
 const LandingPage = () => {
