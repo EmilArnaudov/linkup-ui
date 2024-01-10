@@ -51,7 +51,7 @@ const LandingPage = () => {
     <>
       <Box
         sx={{
-          height: 'calc(100vh - 70px)',
+          height: '100vh',
           backgroundColor: theme.palette.background.default,
         }}
       >
@@ -74,7 +74,7 @@ const LandingPage = () => {
             variant="h2"
             color={theme.palette.primary.contrastText}
             sx={{
-              mt: '7%',
+              mt: '10%',
               ml: '6%',
               maxWidth: '70%',
             }}

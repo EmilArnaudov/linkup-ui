@@ -1,4 +1,3 @@
-import { Navbar } from 'components';
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from 'stores/auth/AuthStore';
@@ -15,7 +14,6 @@ const GuestView = () => {
 
   return (
     <>
-      <Navbar />
       <Outlet />
     </>
   );
