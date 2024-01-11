@@ -1,7 +1,9 @@
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import { Image } from 'components';
+import { SessionProps } from './Session.types';
+import { timestampToDateFormatter } from 'utils';
 
-const Session = () => {
+const Session = ({ session }: SessionProps) => {
   const theme = useTheme();
   return (
     <Stack
@@ -21,7 +23,7 @@ const Session = () => {
       direction="row"
     >
       <Image
-        src="https://www.freetogame.com/g/340/thumbnail.jpg"
+        src={session.game.thumbnail}
         alt="game lobby thumbnail"
         width={1}
         height={1}
@@ -34,7 +36,7 @@ const Session = () => {
             fontWeight="600"
             color={theme.palette.grey[300]}
           >
-            Let's play League of Legends
+            {session.title}
           </Typography>
           <Typography
             variant="body2"
@@ -57,28 +59,63 @@ const Session = () => {
           py={1}
           px={2}
         >
-          <Box
-            sx={{
-              backgroundColor: theme.palette.success.light,
-              p: 0.8,
-              borderRadius: '10%',
-            }}
-          >
-            <Typography
-              fontWeight={500}
-              fontSize={14}
-              color={theme.palette.primary.contrastText}
-            >
-              Live
-            </Typography>
-          </Box>
+          {session.isLive ? (
+            <>
+              <Box
+                sx={{
+                  backgroundColor: theme.palette.success.light,
+                  p: 0.8,
+                  borderRadius: '10%',
+                }}
+              >
+                <Typography
+                  fontWeight={500}
+                  fontSize={14}
+                  color={theme.palette.primary.contrastText}
+                >
+                  Live
+                </Typography>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Typography
+                variant="body2"
+                color={theme.palette.primary.contrastText}
+              >
+                Starts 10:45
+              </Typography>
+            </>
+          )}
 
           <Typography
             variant="body2"
             color={theme.palette.primary.contrastText}
           >
-            Ends 19:45
+            Ends {timestampToDateFormatter(session.end)}
           </Typography>
+          <Box
+            ml="auto"
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            gap={1}
+          >
+            <Image
+              borderRadius="50%"
+              src="/profile-pic.png"
+              alt="host profile pic"
+              width={32}
+              height={32}
+            />
+            <Typography
+              variant="body2"
+              color={theme.palette.primary.contrastText}
+              fontWeight={500}
+            >
+              {session.host.username}
+            </Typography>
+          </Box>
         </Stack>
       </Stack>
     </Stack>

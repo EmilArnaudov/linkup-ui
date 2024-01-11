@@ -10,7 +10,7 @@ const api = create({
 api.addRequestTransform(async (request) => {
   const token = localStorage.getItem('token');
   if (token && request.headers) {
-    request.headers['Authorization'] = `Bearer ${token}`;
+    request.headers['Authorization'] = `${token}`;
   }
 });
 

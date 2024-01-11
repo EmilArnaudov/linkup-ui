@@ -1,27 +1,34 @@
 export interface Game {
-  id: number
-  title: string
-  thumbnail: string
-  short_description: string
-  game_url: string
-  genre: string
-  platform: string
-  publisher: string
-  developer: string
-  release_date: string
-  freetogame_profile_url: string
+  id: number;
+  title: string;
+  thumbnail: string;
+  short_description: string;
+  game_url: string;
+  genre: string;
+  platform: string;
+  publisher: string;
+  developer: string;
+  release_date: string;
+  freetogame_profile_url: string;
+  minimum_system_requirements?: SystemRequirements;
+  screenshots?: Screenshot[];
 }
 
-// {
-//   "id": 540,
-//   "title": "Overwatch 2",
-//   "thumbnail": "https://www.freetogame.com/g/540/thumbnail.jpg",
-//   "short_description": "A hero-focused first-person team shooter from Blizzard Entertainment.",
-//   "game_url": "https://www.freetogame.com/open/overwatch-2",
-//   "genre": "Shooter",
-//   "platform": "PC (Windows)",
-//   "publisher": "Activision Blizzard",
-//   "developer": "Blizzard Entertainment",
-//   "release_date": "2022-10-04",
-//   "freetogame_profile_url": "https://www.freetogame.com/overwatch-2"
-// },
+export interface SessionGame {
+  id: number;
+  title: string;
+  thumbnail: string;
+}
+
+export interface SystemRequirements {
+  os: string;
+  processor: string;
+  memory: string;
+  graphics: string;
+  storage: string;
+}
+
+export interface Screenshot {
+  id: number;
+  image: string;
+}

@@ -1,8 +1,15 @@
 import { Stack, useTheme } from '@mui/material';
 import { Sessions } from 'components';
+import { useEffect } from 'react';
+import { useSessionStore } from 'stores/session/sessionStore';
 
 const AppMainPage = () => {
   const theme = useTheme();
+  const getAllSessions = useSessionStore((state) => state.getAllSessions);
+
+  useEffect(() => {
+    getAllSessions();
+  }, []);
 
   return (
     <Stack

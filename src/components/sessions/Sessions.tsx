@@ -1,7 +1,10 @@
 import { Stack } from '@mui/material';
 import { Session } from './session/Session';
+import { useSessionStore } from 'stores/session/sessionStore';
 
 const Sessions = () => {
+  const allSessions = useSessionStore((state) => state.allSessions);
+
   return (
     <Stack
       sx={{
@@ -12,9 +15,9 @@ const Sessions = () => {
       alignItems="center"
       gap={3}
     >
-      <Session />
-      <Session />
-      <Session />
+      {allSessions.map((session) => (
+        <Session key={session.id} session={session} />
+      ))}
     </Stack>
   );
 };

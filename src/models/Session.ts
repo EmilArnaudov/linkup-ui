@@ -1,4 +1,5 @@
 import { User } from './User';
+import { SessionGame } from './game/Game';
 
 export interface Session {
   id: number;
@@ -6,9 +7,9 @@ export interface Session {
   isLive: boolean;
   currentPlayers: number;
   maxPlayers: number;
-  game: string;
-  start: string;
-  end: string;
+  game: SessionGame;
+  start: number;
+  end: number;
   host: User;
   participants: User[];
 }
