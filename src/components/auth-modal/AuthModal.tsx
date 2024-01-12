@@ -29,8 +29,8 @@ const AuthModal = ({ open, handleClose }: Props) => {
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      username: '',
-      password: '',
+      username: 'test1234',
+      password: 'test1234',
       repeatPassword: '',
     },
     resolver: zodResolver(FormValidationSchema),

@@ -51,9 +51,8 @@ const CreateSessionModal = ({ open, handleClose }: Props) => {
   });
 
   const onSubmit = async (data: CreateSessionFormValues) => {
-    console.log(data);
-
     await createSession(data);
+    handleClose();
   };
 
   const modalStyle = {
@@ -68,6 +67,8 @@ const CreateSessionModal = ({ open, handleClose }: Props) => {
     p: 4,
     borderRadius: 4,
   };
+
+  console.log(errors);
 
   return (
     <Modal open={open} onClose={handleClose}>
