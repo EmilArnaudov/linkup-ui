@@ -9,6 +9,7 @@ import './reset.css';
 import './main.css';
 import { GuestView, SessionsPage, UserView } from 'pages';
 import AppMainPage from 'pages/app-main-page/AppMainPage';
+import SessionDetailsPage from 'pages/session-details-page/SessionDetailsPage';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <AppMainPage />,
+      },
+      {
+        path: 'sessions/:id',
+        element: <SessionDetailsPage />,
       },
       {
         path: 'sessions',

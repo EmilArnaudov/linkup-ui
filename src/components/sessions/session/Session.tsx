@@ -2,11 +2,19 @@ import { Box, Stack, Typography, useTheme } from '@mui/material';
 import { Image } from 'components';
 import { SessionProps } from './Session.types';
 import { timestampToDateFormatter } from 'utils';
+import { useNavigate } from 'react-router-dom';
 
 const Session = ({ session }: SessionProps) => {
+  const navigate = useNavigate();
   const theme = useTheme();
+
+  const handleNavigate = () => {
+    navigate(`/app/sessions/${session.id}`);
+  };
+
   return (
     <Stack
+      onClick={handleNavigate}
       sx={{
         width: '100%',
         backgroundColor: '#342056',
