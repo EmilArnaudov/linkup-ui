@@ -12,8 +12,8 @@ const Session = ({ session }: SessionProps) => {
         backgroundColor: '#342056',
         '&:hover': {
           cursor: 'pointer',
-          transform: 'scale(1.025)',
-          boxShadow: '0px 0px 15px 1px rgba(245,228,245,0.51)',
+          transform: 'scale(1.0035)',
+          boxShadow: '0px 0px 5px 1px rgba(245,228,245,0.51)',
         },
         transition: 'all 300ms ease-in-out',
       }}
