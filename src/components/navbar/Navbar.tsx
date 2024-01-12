@@ -7,6 +7,7 @@ import { Stack, Typography } from '@mui/material';
 // import styled from '@emotion/styled';
 import { Image } from 'components';
 import { useAuthStore } from 'stores/auth/AuthStore';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const { logout, currentUser } = useAuthStore((state) => ({
@@ -45,9 +46,17 @@ export default function Navbar() {
             <Image src="/logo.png" alt="linkup logo" height={54} width={88} />
           </IconButton>
           {currentUser && (
-            <Box onClick={logout}>
-              <Typography>Logout</Typography>
-            </Box>
+            <Stack direction="row" alignItems="center" gap={4}>
+              <Link
+                style={{ color: 'white', fontWeight: 'bold' }}
+                to="/app/sessions"
+              >
+                Sessions
+              </Link>
+              <Box onClick={logout}>
+                <Typography>Logout</Typography>
+              </Box>
+            </Stack>
           )}
         </Stack>
       </AppBar>

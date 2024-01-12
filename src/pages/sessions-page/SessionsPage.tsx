@@ -1,8 +1,9 @@
-import { Stack, Typography, useTheme } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
+import { Sessions } from 'components';
 import { useEffect } from 'react';
 import { useSessionStore } from 'stores/session/sessionStore';
 
-const AppMainPage = () => {
+const SessionsPage = () => {
   const theme = useTheme();
   const getAllSessions = useSessionStore((state) => state.getAllSessions);
 
@@ -14,12 +15,14 @@ const AppMainPage = () => {
     <Stack
       sx={{
         backgroundColor: theme.palette.background.default,
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
       direction="column"
     >
-      <Typography variant="h2">Main apge</Typography>
+      <Sessions />
     </Stack>
   );
 };
 
-export default AppMainPage;
+export default SessionsPage;

@@ -8,7 +8,7 @@ const Session = ({ session }: SessionProps) => {
   return (
     <Stack
       sx={{
-        width: '80%',
+        width: '100%',
         backgroundColor: '#342056',
         '&:hover': {
           cursor: 'pointer',
@@ -31,13 +31,23 @@ const Session = ({ session }: SessionProps) => {
       />
       <Stack flex={1} justifyContent="space-between">
         <Stack px={2} pt={4} pb={2} gap={0.5}>
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            color={theme.palette.grey[300]}
-          >
-            {session.title}
-          </Typography>
+          <Box display="flex" justifyContent="space-between">
+            <Typography
+              variant="h5"
+              fontWeight="600"
+              color={theme.palette.grey[300]}
+            >
+              {session.title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color={theme.palette.primary.contrastText}
+              fontWeight={500}
+            >
+              {`${session.currentPlayers} / ${session.maxPlayers}`}
+            </Typography>
+          </Box>
+
           <Typography
             variant="body2"
             fontSize={14}

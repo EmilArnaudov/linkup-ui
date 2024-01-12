@@ -7,7 +7,7 @@ import theme from './theme/theme';
 
 import './reset.css';
 import './main.css';
-import { GuestView, UserView } from 'pages';
+import { GuestView, SessionsPage, UserView } from 'pages';
 import AppMainPage from 'pages/app-main-page/AppMainPage';
 
 const router = createBrowserRouter([
@@ -28,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <AppMainPage />,
+      },
+      {
+        path: 'sessions',
+        element: <SessionsPage />,
       },
     ],
   },
