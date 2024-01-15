@@ -1,13 +1,19 @@
 import { SessionDetailsProps } from './SessionDetails.types';
 import { Button, Stack, Typography, useTheme } from '@mui/material';
-import { Image } from 'components';
+import { Image, UserBadge } from 'components';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from 'stores/auth/AuthStore';
 import { useSessionStore } from 'stores/session/sessionStore';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const SessionDetails = ({ session }: SessionDetailsProps) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const currentUser = useAuthStore((state) => state.currentUser);
-  const joinSession = useSessionStore((state) => state.joinSession);
+  const { joinSession, leaveSession } = useSessionStore((state) => ({
+    joinSession: state.joinSession,
+    leaveSession: state.leaveSession,
+  }));
   if (!session || !currentUser) {
     return;
   }
@@ -16,7 +22,13 @@ const SessionDetails = ({ session }: SessionDetailsProps) => {
     joinSession(session.id, currentUser.id);
   };
 
-  const handleLeave = () => {};
+  const handleLeave = () => {
+    leaveSession(session.id, currentUser.id);
+  };
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   const isHost = currentUser.id === session.host.id;
   const isParticipant = session.participants
@@ -24,7 +36,26 @@ const SessionDetails = ({ session }: SessionDetailsProps) => {
     .includes(currentUser.id);
 
   return (
-    <Stack width="35%">
+    <Stack width="35%" gap={2}>
+      <Stack
+        sx={{
+          '&:hover': {
+            cursor: 'pointer',
+          },
+        }}
+        direction="row"
+        alignItems="center"
+        gap={1}
+        onClick={goBack}
+      >
+        <ArrowBackIosNewIcon
+          fontSize="small"
+          htmlColor={theme.palette.primary.contrastText}
+        />
+        <Typography variant="body1" color={theme.palette.primary.contrastText}>
+          Go back
+        </Typography>
+      </Stack>
       <Image
         src={session.game.thumbnail}
         alt="game thumbnail"
@@ -32,13 +63,61 @@ const SessionDetails = ({ session }: SessionDetailsProps) => {
         height={1}
         sx={{ width: '100%', height: '80%' }}
       />
-
-      <Typography variant="body1" color={theme.palette.primary.contrastText}>
-        Host: {session.host.username}
-      </Typography>
-      <Typography variant="body1" color={theme.palette.primary.contrastText}>
-        Participants: {session.participants.map((p) => p.username).join(', ')}
-      </Typography>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        borderBottom={`1px solid ${theme.palette.primary.light}`}
+        pb={2}
+      >
+        <Typography variant="body1" color={theme.palette.primary.contrastText}>
+          Host:
+        </Typography>
+        <UserBadge user={session.host} />
+      </Stack>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        borderBottom={`1px solid ${theme.palette.primary.light}`}
+        pb={2}
+      >
+        <Typography
+          sx={{ alignSelf: 'start' }}
+          variant="body1"
+          color={theme.palette.primary.contrastText}
+        >
+          Participants:
+        </Typography>
+        <Stack gap={1}>
+          {session.participants.map((p) => (
+            <UserBadge user={p} />
+          ))}
+        </Stack>
+      </Stack>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        borderBottom={`1px solid ${theme.palette.primary.light}`}
+        pb={2}
+      >
+        <Typography variant="body1" color={theme.palette.primary.contrastText}>
+          Room Size:
+        </Typography>
+        {session.currentPlayers < session.maxPlayers ? (
+          <Typography
+            variant="body1"
+            color={theme.palette.primary.contrastText}
+          >
+            {session.currentPlayers} / {session.maxPlayers}
+          </Typography>
+        ) : (
+          <Typography variant="body1" color={theme.palette.error.light}>
+            Session is Full
+          </Typography>
+        )}
+      </Stack>
 
       {isHost ? (
         <Button variant="contained" color="secondary">

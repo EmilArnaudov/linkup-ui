@@ -10,6 +10,7 @@ interface SessionState {
   getSessionById: (id: number) => Promise<void>;
   createSession: (formData: CreateSessionFormValues) => Promise<void>;
   joinSession: (sessionId: number, userId: number) => Promise<void>;
+  leaveSession: (sessionId: number, userId: number) => Promise<void>;
 }
 
 export const useSessionStore = create<SessionState>()((set, get) => ({
@@ -38,6 +39,13 @@ export const useSessionStore = create<SessionState>()((set, get) => ({
   },
   joinSession: async (sessionId, userId) => {
     const response = await api.post(`/session/join/${sessionId}`, { userId });
+    if (response.ok) {
+      const session = response.data as Session;
+      set({ sessionDetails: session });
+    }
+  },
+  leaveSession: async (sessionId, userId) => {
+    const response = await api.post(`/session/leave/${sessionId}`, { userId });
     if (response.ok) {
       const session = response.data as Session;
       set({ sessionDetails: session });
