@@ -12,8 +12,8 @@ export const CreateSessionFormValidationSchema = z.object({
     .max(30, { message: 'Username must be maximum 30 characters' }),
   maxPlayers: z.number().min(1).max(8),
   gameId: z.number(),
-  start: z.number(),
-  end: z.number(),
+  start: z.string(),
+  end: z.string(),
   hostId: z.number(),
 });
 

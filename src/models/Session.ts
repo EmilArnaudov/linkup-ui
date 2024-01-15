@@ -8,8 +8,8 @@ export interface Session {
   currentPlayers: number;
   maxPlayers: number;
   game: SessionGame;
-  start: number;
-  end: number;
+  start: string;
+  end: string;
   host: User;
   participants: User[];
 }

@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuthStore } from 'stores/auth/AuthStore';
 import { useSessionStore } from 'stores/session/sessionStore';
+import dayjs from 'dayjs';
 
 const CreateSessionModal = ({ open, handleClose }: Props) => {
   const { gameOptions } = useGamesStore((state) => ({
@@ -29,10 +30,8 @@ const CreateSessionModal = ({ open, handleClose }: Props) => {
   }));
   const theme = useTheme();
 
-  const now = new Date();
-  const nowTimestamp = Math.floor(now.getTime() / 1000);
-  const later = new Date(now.getTime() + 5 * 60 * 60 * 1000);
-  const laterTimestamp = Math.floor(later.getTime() / 1000);
+  const now = dayjs().add(1, 'minute').toISOString();
+  const later = dayjs().add(4, 'hour').toISOString();
 
   const {
     register,
@@ -44,8 +43,8 @@ const CreateSessionModal = ({ open, handleClose }: Props) => {
       maxPlayers: 1,
       hostId: currentUser!.id,
       gameId: gameOptions[0].value,
-      start: nowTimestamp,
-      end: laterTimestamp,
+      start: now,
+      end: later,
     },
     resolver: zodResolver(CreateSessionFormValidationSchema),
   });

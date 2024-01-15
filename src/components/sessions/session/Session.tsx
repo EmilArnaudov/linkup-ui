@@ -20,7 +20,7 @@ const Session = ({ session }: SessionProps) => {
         backgroundColor: '#342056',
         '&:hover': {
           cursor: 'pointer',
-          transform: 'scale(1.0035)',
+          // transform: 'scale(1.0035)',
           boxShadow: '0px 0px 5px 1px rgba(245,228,245,0.51)',
         },
         transition: 'all 300ms ease-in-out',
@@ -101,7 +101,7 @@ const Session = ({ session }: SessionProps) => {
                 variant="body2"
                 color={theme.palette.primary.contrastText}
               >
-                Starts 10:45
+                Starts {timestampToDateFormatter(session.start)}
               </Typography>
             </>
           )}
