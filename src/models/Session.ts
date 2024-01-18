@@ -1,3 +1,4 @@
+import { Message } from 'react-hook-form';
 import { User } from './User';
 import { SessionGame } from './game/Game';
 
@@ -11,5 +12,6 @@ export interface Session {
   start: string;
   end: string;
   host: User;
+  messages: Message[];
   participants: User[];
 }

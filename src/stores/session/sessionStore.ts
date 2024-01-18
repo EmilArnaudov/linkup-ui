@@ -6,6 +6,7 @@ import { create } from 'zustand';
 interface SessionState {
   allSessions: Session[];
   sessionDetails: Session | null;
+
   getAllSessions: () => Promise<void>;
   getSessionById: (id: number) => Promise<void>;
   createSession: (formData: CreateSessionFormValues) => Promise<void>;

@@ -32,6 +32,7 @@ export default defineConfig({
       api: '/src/api',
       assets: '/src/assets',
       utils: '/src/utils.ts',
+      socket: '/src/socket.ts',
     },
   },
 });

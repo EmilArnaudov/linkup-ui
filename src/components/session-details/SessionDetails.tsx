@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from 'stores/auth/AuthStore';
 import { useSessionStore } from 'stores/session/sessionStore';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import SessionChat from './session-chat/SessionChat';
 
 const SessionDetails = ({ session }: SessionDetailsProps) => {
   const theme = useTheme();
@@ -119,6 +120,7 @@ const SessionDetails = ({ session }: SessionDetailsProps) => {
         )}
       </Stack>
 
+      <SessionChat />
       {isHost ? (
         <Button variant="contained" color="secondary">
           End session
