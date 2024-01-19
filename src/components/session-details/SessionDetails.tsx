@@ -92,7 +92,7 @@ const SessionDetails = ({ session }: SessionDetailsProps) => {
         </Typography>
         <Stack gap={1}>
           {session.participants.map((p) => (
-            <UserBadge user={p} />
+            <UserBadge key={p.id} user={p} />
           ))}
         </Stack>
       </Stack>

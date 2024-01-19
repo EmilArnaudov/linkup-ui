@@ -1,4 +1,4 @@
-import { Message } from 'react-hook-form';
+import { Message } from './Message';
 import { User } from './User';
 import { SessionGame } from './game/Game';
 

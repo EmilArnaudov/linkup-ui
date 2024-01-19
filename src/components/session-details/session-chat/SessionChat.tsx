@@ -1,10 +1,46 @@
-import { Box, InputAdornment, Stack, TextField, useTheme } from '@mui/material';
+import {
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
+import {
+  ChangeEventHandler,
+  KeyboardEventHandler,
+  useEffect,
+  useState,
+} from 'react';
+import { useAuthStore } from 'stores/auth/AuthStore';
+import { useSessionStore } from 'stores/session/sessionStore';
+import { socket } from 'socket';
+import { Message } from 'models/Message';
 
 const SessionChat = () => {
   const theme = useTheme();
+  const currentUser = useAuthStore((state) => state.currentUser);
+  const { sendMessage, sessionDetails } = useSessionStore((state) => ({
+    sendMessage: state.sendMessage,
+    sessionDetails: state.sessionDetails,
+  }));
   const [message, setMessage] = useState<string>('');
+
+  useEffect(() => {
+    socket.on('newMessage', handleNewMessage);
+
+    return () => {
+      socket.off('newMessage');
+    };
+  }, []);
+
+  if (!sessionDetails || !currentUser) {
+    return;
+  }
+
+  const handleNewMessage = (message: Message) => {
+    console.log(message);
+  };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.value) {
@@ -14,12 +50,12 @@ const SessionChat = () => {
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === 'Enter') {
-      sendMessage();
+      handleSendMessage();
     }
   };
 
-  const sendMessage = () => {
-    console.log(message);
+  const handleSendMessage = () => {
+    sendMessage(sessionDetails?.id, currentUser?.id, message);
     setMessage('');
   };
 
@@ -31,7 +67,17 @@ const SessionChat = () => {
         backgroundColor: '#2b3a67',
       }}
     >
-      <Stack flex={1} />
+      <Stack flex={1}>
+        {sessionDetails.messages.map((message) => (
+          <Typography
+            key={`${message.id}-${Math.random()}`}
+            variant="body1"
+            color={theme.palette.primary.contrastText}
+          >
+            {message.content}
+          </Typography>
+        ))}
+      </Stack>
       <TextField
         value={message}
         onChange={handleChange}

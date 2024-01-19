@@ -1,5 +1,6 @@
 import { api } from 'api/api';
 import { CreateSessionFormValues } from 'components/create-session-modal/CreateSessionModal.types';
+import { Message } from 'models/Message';
 import { Session } from 'models/Session';
 import { create } from 'zustand';
 
@@ -12,6 +13,12 @@ interface SessionState {
   createSession: (formData: CreateSessionFormValues) => Promise<void>;
   joinSession: (sessionId: number, userId: number) => Promise<void>;
   leaveSession: (sessionId: number, userId: number) => Promise<void>;
+
+  sendMessage: (
+    sessionId: number,
+    senderId: number,
+    content: string,
+  ) => Promise<void>;
 }
 
 export const useSessionStore = create<SessionState>()((set, get) => ({
@@ -50,6 +57,18 @@ export const useSessionStore = create<SessionState>()((set, get) => ({
     if (response.ok) {
       const session = response.data as Session;
       set({ sessionDetails: session });
+    }
+  },
+  sendMessage: async (sessionId, senderId, content) => {
+    const response = await api.post(`/session/message/${sessionId}`, {
+      senderId,
+      content,
+    });
+    if (response.ok) {
+      const message = response.data as Message;
+      const sessionDetails = get().sessionDetails;
+      sessionDetails?.messages.unshift(message);
+      set({ sessionDetails });
     }
   },
 }));

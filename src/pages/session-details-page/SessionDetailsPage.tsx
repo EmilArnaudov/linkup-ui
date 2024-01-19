@@ -17,11 +17,11 @@ const SessionDetailsPage = () => {
     const id = Number(params.id);
     console.log(id, 'od');
 
-    socket.emit('joinSession', { sessionId: `SESSION_CHAT_${id}` });
+    socket.emit('joinSession', { sessionId: 'are' });
     getSessionById(id);
 
     return () => {
-      socket.emit('leaveSession', { sessionId: `SESSION_CHAT_${id}` });
+      socket.emit('leaveSession', { sessionId: 'are' });
     };
   }, []);
 
