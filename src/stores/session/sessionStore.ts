@@ -19,6 +19,7 @@ interface SessionState {
     senderId: number,
     content: string,
   ) => Promise<void>;
+  upsertMessage: (message: Message) => void;
 }
 
 export const useSessionStore = create<SessionState>()((set, get) => ({
@@ -60,15 +61,20 @@ export const useSessionStore = create<SessionState>()((set, get) => ({
     }
   },
   sendMessage: async (sessionId, senderId, content) => {
-    const response = await api.post(`/session/message/${sessionId}`, {
+    await api.post(`/session/message/${sessionId}`, {
       senderId,
       content,
     });
-    if (response.ok) {
-      const message = response.data as Message;
-      const sessionDetails = get().sessionDetails;
-      sessionDetails?.messages.unshift(message);
-      set({ sessionDetails });
-    }
+    // if (response.ok) {
+    //   const data = response.data as { message: Message };
+    //   const sessionDetails = get().sessionDetails;
+    //   sessionDetails?.messages.push(data.message);
+    //   set({ sessionDetails });
+    // }
+  },
+  upsertMessage: (message) => {
+    const sessionDetails = get().sessionDetails;
+    sessionDetails?.messages.push(message);
+    set({ sessionDetails });
   },
 }));

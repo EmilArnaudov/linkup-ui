@@ -1,29 +1,28 @@
-import {
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { InputAdornment, Stack, TextField, useTheme } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import {
   ChangeEventHandler,
   KeyboardEventHandler,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { useAuthStore } from 'stores/auth/AuthStore';
 import { useSessionStore } from 'stores/session/sessionStore';
 import { socket } from 'socket';
 import { Message } from 'models/Message';
+import ChatMessage from './chat-message/ChatMessage';
 
 const SessionChat = () => {
   const theme = useTheme();
   const currentUser = useAuthStore((state) => state.currentUser);
-  const { sendMessage, sessionDetails } = useSessionStore((state) => ({
-    sendMessage: state.sendMessage,
-    sessionDetails: state.sessionDetails,
-  }));
+  const { sendMessage, sessionDetails, upsertMessage } = useSessionStore(
+    (state) => ({
+      sendMessage: state.sendMessage,
+      sessionDetails: state.sessionDetails,
+      upsertMessage: state.upsertMessage,
+    }),
+  );
   const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
@@ -34,12 +33,24 @@ const SessionChat = () => {
     };
   }, []);
 
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [sessionDetails?.messages.length]);
+
   if (!sessionDetails || !currentUser) {
     return;
   }
 
-  const handleNewMessage = (message: Message) => {
-    console.log(message);
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleNewMessage = (data: { message: Message }) => {
+    console.log(data.message, 'MESSAGE FROM SOCKET');
+
+    upsertMessage(data.message);
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -67,16 +78,21 @@ const SessionChat = () => {
         backgroundColor: '#2b3a67',
       }}
     >
-      <Stack flex={1}>
+      <Stack
+        sx={{
+          maxHeight: 344,
+          overflowY: 'auto',
+        }}
+        flex={1}
+        gap={2}
+      >
         {sessionDetails.messages.map((message) => (
-          <Typography
+          <ChatMessage
             key={`${message.id}-${Math.random()}`}
-            variant="body1"
-            color={theme.palette.primary.contrastText}
-          >
-            {message.content}
-          </Typography>
+            message={message}
+          />
         ))}
+        <div ref={chatEndRef} />
       </Stack>
       <TextField
         value={message}

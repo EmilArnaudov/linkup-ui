@@ -16,12 +16,12 @@ const SessionDetailsPage = () => {
   useEffect(() => {
     const id = Number(params.id);
     console.log(id, 'od');
-
-    socket.emit('joinSession', { sessionId: 'are' });
+    const roomName = `SESSION${id}`;
+    socket.emit('joinSession', roomName);
     getSessionById(id);
 
     return () => {
-      socket.emit('leaveSession', { sessionId: 'are' });
+      socket.emit('leaveSession', roomName);
     };
   }, []);
 
